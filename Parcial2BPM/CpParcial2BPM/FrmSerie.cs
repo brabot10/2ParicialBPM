@@ -120,27 +120,50 @@ namespace CpParcial2BPM
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            var serie = new Serie();
-            serie.titulo = txtTituloName.Text.Trim();
-            serie.sinopsis = txtSinopsis.Text.Trim();
-            serie.director = txtDirector.Text;
-            serie.duracion = int.Parse(txtDuracion.Text);
-            serie.fechaEstreno = dtpFechaEstreno.Value;
-            if (esNuevo)
+            if (validar())
             {
-                serie.estado = 1;
-                SerieCln.insertar(serie);
+                var serie = new Serie();
+                serie.titulo = txtTituloName.Text.Trim();
+                serie.sinopsis = txtSinopsis.Text.Trim();
+                serie.director = txtDirector.Text;
+                serie.duracion = int.Parse(txtDuracion.Text);
+                serie.fechaEstreno = dtpFechaEstreno.Value;
+
+                var existingSeries = SerieCln.listar();
+                bool serieExists = false;
+
+                foreach (var existingSerie in existingSeries)
+                {
+                    if (existingSerie.titulo == serie.titulo && (esNuevo || existingSerie.id != serie.id))
+                    {
+                        serieExists = true;
+                        break;
+                    }
+                }
+
+                if (serieExists)
+                {
+                    MessageBox.Show("Ya existe una serie con el mismo título.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (esNuevo)
+                {
+                    serie.estado = 1;
+                    SerieCln.insertar(serie);
+                }
+                else
+                {
+                    int index = dgvLista.CurrentCell.RowIndex;
+                    int id = Convert.ToInt32(dgvLista.Rows[index].Cells["id"].Value);
+                    serie.id = id;
+                    SerieCln.actualizar(serie);
+                }
+
+                listar();
+                btnCancelar.PerformClick();
+                MessageBox.Show("Serie guardada correctamente", "Mensaje", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else
-            {
-                int index = dgvLista.CurrentCell.RowIndex;
-                serie.id = Convert.ToInt32(dgvLista.Rows[index].Cells["id"].Value);
-                SerieCln.actualizar(serie);
-            }
-            listar();
-            btnCancelar.PerformClick();
-            MessageBox.Show("Serie guardada correctamente", "::: 2do Parcial Practico - Mensaje::: ",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private void limpiar()
         {
