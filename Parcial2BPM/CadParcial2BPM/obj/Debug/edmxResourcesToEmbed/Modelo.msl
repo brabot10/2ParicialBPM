@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Parcial2BPMModelStoreContainer" CdmEntityContainer="Parcial2BPMEntities">
+    <EntitySetMapping Name="Serie">
+      <EntityTypeMapping TypeName="Parcial2BPMModel.Serie">
+        <MappingFragment StoreEntitySet="Serie">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="sinopsis" ColumnName="sinopsis" />
+          <ScalarProperty Name="director" ColumnName="director" />
+          <ScalarProperty Name="duracion" ColumnName="duracion" />
+          <ScalarProperty Name="fechaEstreno" ColumnName="fechaEstreno" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="paSerieListar" FunctionName="Parcial2BPMModel.Store.paSerieListar">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="Parcial2BPMModel.paSerieListar_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="sinopsis" ColumnName="sinopsis" />
+          <ScalarProperty Name="director" ColumnName="director" />
+          <ScalarProperty Name="duracion" ColumnName="duracion" />
+          <ScalarProperty Name="fechaEstreno" ColumnName="fechaEstreno" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
